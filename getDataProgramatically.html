@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <h1>programmatically get the data</h1>
+        <!-- programmatically get the data  -->
+        <form id="bankingForm">
+            <input name="amount" id="amount" type="text">
+
+            <select name="transType" id="transType">
+                <option value="checking/deposit">Checking</option>
+                <option value="savings/deposit">Savings</option>
+            </select>
+
+            <button type="submit">Submit</button>
+            <div id="CheckingBalance"></div>
+            <div id="SavingBalance"></div>
+        </form>
+
+
+        <script>
+            //grab the dom elements
+            let bankingForm = document.querySelector('#bankingForm')
+            let amount = document.querySelector('#amount')
+            let transType = document.querySelector('#transType')
+            let checkingBalance = document.querySelector('#CheckingBalance')
+            let savingBalance = document.querySelector('#SavingBalance')
+
+            //take the form and put event listeners on the form on submit
+            bankingForm.addEventListener('submit', async (e) => {
+                //prevent the default of a form
+                e.preventDefault()
+                console.log(amount.value)
+                console.log(transType.value)
+
+                //make an object that holds transtype and amount
+                let newTransaction = {
+                    amount: amount.value,
+                    transType: transType.value
+                }
+
+
+                let result = await fetch('/deposits', {
+                    //make a fetch change the method to post
+                    //attach a payload to the fetch request
+                    method: 'post',
+                    //html, text, img, video is what can be sent
+                    headers: { 'Content-type': 'application/json; charset=UTF-8' }, //specifying that data in format of json is sent
+                    body: JSON.stringify(newTransaction)
+                })
+                let balance = await result.json()
+
+                //get results back and display the information
+                checkingBalance.textContent = `Checking ${balance.checking}`
+                savingBalance.textContent = `Savings: ${balance.savings}`
+            })
+
+
+        </script>
+    </body>
+
+</html>
