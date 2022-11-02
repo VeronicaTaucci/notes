@@ -158,3 +158,45 @@ const findAuthor = async () => { //this will get us a list of users
     })
 }
 // findAuthor()
+
+
+
+
+
+
+
+
+
+add column to table?
+//! first run, sequelize migration:create --name 'add-genre-tomovies'
+    //this will create a new migration file, in the file:
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up (queryInterface, Sequelize) {
+    /**
+     * Add altering commands here.
+     *
+     * Example:
+     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
+     */
+    //? add new genre column to the movies table, fired when run, sequelize db:migrate
+    return queryInterface.addColumn('Movies','genre',{
+      type: Sequelize.STRING
+    })
+  },
+
+  async down (queryInterface, Sequelize) {
+    /**
+     * Add reverting commands here.
+     *
+     * Example:
+     * await queryInterface.dropTable('users');
+     */
+     //? remove genre column from movies table, fired when run, sequelize db:migrate:undo
+    return queryInterface.removeColumn('Movies','genre')
+  }
+};
+
+
+// run, sequelize db:migrate
