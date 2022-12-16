@@ -1,0 +1,6 @@
+Deploy on Netlify : https://www.netlify.com/blog/2016/07/22/deploy-react-apps-in-less-than-30-seconds/
+In Client folder: create a _redirects file
+Inside redirects: /* /index.html 200
+Run: npm run build
+Run: netlify deploy 
+Follow the instructions, if it is asking for the publish directory type: ./build
